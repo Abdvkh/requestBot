@@ -8,16 +8,12 @@ from rocketgram import context2
 @commonfilters.command('/start')
 async def start_command():
     """This is asynchronous handler. You can use here any async code."""
-
+    kb = ReplyKeyboard()
+    kb.text("Русский").row()
+    kb.text("Uzbek").row()
     await SendMessage(context2.message.user.user_id,
-                      '🔹 Hello there. This is the demo bot for Rocketgram framework.\n\n'
-                      'See source code here:\n'
-                      'github.com/vd2org/rocketgram-template\n\n'
-                      'And Rocketgram framework source here:\n'
-                      'github.com/vd2org/rocketgram\n\n'
-                      'You can list all commands by type /help.\n\n'
-                      'Support group: @RocketBots.',
-                      disable_web_page_preview=True).send()
+                      'Добро подаловать в наш бот, пожалуйста выберите язык использования',
+                      reply_markup=kb.render()).send()
 
 
 @router.handler
