@@ -6,19 +6,16 @@ from rocketgram import context2
 @router.handler
 @commonfilters.chat_type(ChatType.private)
 @commonfilters.command('/start')
-async def start_command():
-    """This is asynchronous handler. You can use here any async code."""
+async def keyboard_command():
+    """Shows how to create reply keyboard"""
+
+    kb = ReplyKeyboard()
+    kb.text("Uzbek").row()
+    kb.text("Русский").row()
 
     await SendMessage(context2.message.user.user_id,
-                      '🔹 Hello there. This is the demo bot for Rocketgram framework.\n\n'
-                      'See source code here:\n'
-                      'github.com/vd2org/rocketgram-template\n\n'
-                      'And Rocketgram framework source here:\n'
-                      'github.com/vd2org/rocketgram\n\n'
-                      'You can list all commands by type /help.\n\n'
-                      'Support group: @RocketBots.',
-                      disable_web_page_preview=True).send()
-
+                      'Пожалуйста выберите язык:',
+                      reply_markup=kb.render()).send()
 
 @router.handler
 @commonfilters.chat_type(ChatType.private)
