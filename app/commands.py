@@ -6,8 +6,8 @@ from rocketgram import context2
 @router.handler
 @commonfilters.chat_type(ChatType.private)
 @commonfilters.command('/start')
-async def keyboard_command():
-    """Shows how to create reply keyboard"""
+async def start_command():
+    """Asks the user to choose the language he prefers"""
 
     kb = ReplyKeyboard()
     kb.text("Uzbek").row()
@@ -16,6 +16,15 @@ async def keyboard_command():
     await SendMessage(context2.message.user.user_id,
                       'Пожалуйста выберите язык:',
                       reply_markup=kb.render()).send()
+    while True:
+
+        # here waiting next request
+        # this is python's async generator
+        yield start_command()
+
+        if context2.message.text == 'Uzbek':
+            SendMessage(context2.message.chat.chat_id, "Endi hizmatlarimizdan birini tanlab oling").webhook()
+            return
 
 @router.handler
 @commonfilters.chat_type(ChatType.private)
