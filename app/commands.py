@@ -7,10 +7,18 @@ from rocketgram import context2
 @commonfilters.chat_type(ChatType.private)
 @commonfilters.command('/start')
 async def start_command():
-    """Asks the user to choose the language he prefers"""
+    """This is asynchronous handler. You can use here any async code."""
 
-      await SendMessage(context2.message.user.user_id, "Endi hizmatlarimizdan birini tanlab oling").send()
-    #     return
+    await SendMessage(context2.message.user.user_id,
+                      '🔹 Hello there. This is the demo bot for Rocketgram framework.\n\n'
+                      'See source code here:\n'
+                      'github.com/vd2org/rocketgram-template\n\n'
+                      'And Rocketgram framework source here:\n'
+                      'github.com/vd2org/rocketgram\n\n'
+                      'You can list all commands by type /help.\n\n'
+                      'Support group: @RocketBots.',
+                      disable_web_page_preview=True).send()
+
 
 @router.handler
 @commonfilters.chat_type(ChatType.private)
