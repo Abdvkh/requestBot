@@ -9,22 +9,8 @@ from rocketgram import context2
 async def start_command():
     """Asks the user to choose the language he prefers"""
 
-    kb = ReplyKeyboard()
-    kb.text("Uzbek").row()
-    kb.text("Русский").row()
-
-    await SendMessage(context2.message.user.user_id,
-                      'Пожалуйста выберите язык:',
-                      reply_markup=kb.render()).send()
-    while True:
-
-        # here waiting next request
-        # this is python's async generator
-        yield start_command()
-
-        if context2.message.text == 'Uzbek':
-            SendMessage(context2.message.chat.chat_id, "Endi hizmatlarimizdan birini tanlab oling").webhook()
-            return
+      await SendMessage(context2.message.user.user_id, "Endi hizmatlarimizdan birini tanlab oling").send()
+    #     return
 
 @router.handler
 @commonfilters.chat_type(ChatType.private)
