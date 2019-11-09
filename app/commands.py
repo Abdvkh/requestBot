@@ -1,6 +1,14 @@
 from mybot import router
 from rocketgram import commonfilters, ChatType, SendMessage
-from rocketgram import context2, ReplyKeyboard
+from rocketgram import context2, ReplyKeyboard, make_waiter
+
+
+
+@make_waiter
+@commonfilters.update_type(UpdateType.message)
+@commonfilters.chat_type(ChatType.private)
+def next_message():
+    return True
 
 
 @router.handler
@@ -12,8 +20,13 @@ async def start_command():
     kb.text("Русский").row()
     kb.text("Uzbek").row()
     await SendMessage(context2.message.user.user_id,
-                      'Добро подаловать в наш бот, пожалуйста выберите язык использования',
+                      'Добро пожаловать в наш бот, пожалуйста выберите язык использования',
                       reply_markup=kb.render()).send()
+    yield next_message()
+    if context2.message.text == 'Uzbek':
+            SendMessage(context2.message.chat.chat_id, "🔹 Ok! See you later!").webhook()
+            return
+    
 
 
 @router.handler
