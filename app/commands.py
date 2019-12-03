@@ -2,6 +2,11 @@ from mybot import router
 from rocketgram import commonfilters, ChatType, SendMessage
 from rocketgram import context2, ReplyKeyboard, make_waiter
 
+@make_waiter
+@commonfilters.update_type(UpdateType.message)
+@commonfilters.chat_type(ChatType.private)
+def next_all():
+    return True
 
 @router.handler
 @commonfilters.chat_type(ChatType.private)
@@ -14,6 +19,20 @@ async def start_command():
     await SendMessage(context2.message.user.user_id,
                       'Добро пожаловать в наш бот, пожалуйста выберите язык использования',
                       reply_markup=kb.render()).send()
+    while True:
+
+        # here waiting next request
+        # this is python's async generator
+        yield next_all()
+
+        if context2.message.text == 'Uzbek':
+            SendMessage(context2.message.chat.chat_id, "🔹 Ok! See you later!").send()
+            return
+
+        # print reminder every five updates
+        if context2.message.text == 'Русский':
+            await SendMessage(context2.message.chat.chat_id,
+                              "🔹 I am in <code>echo</code> mode. Hit /cancel to exit.").send()
 
 
 @router.handler
