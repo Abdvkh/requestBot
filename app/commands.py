@@ -14,9 +14,10 @@ def next_all():
 async def start_command():
     """This is asynchronous handler. You can use here any async code."""
     kb = ReplyKeyboard()
-    kb.text("Русский").row()
-    kb.text("Uzbek").row()
-    await SendMessage(context2.message.user.user_id,
+    kb.text("Russian").row()
+    kb.text("Tajik").row()
+    
+    SendMessage(context2.message.user.user_id,
                       'Добро пожаловать в наш бот, пожалуйста выберите язык использования',
                       reply_markup=kb.render()).send()
     while True:
@@ -25,14 +26,14 @@ async def start_command():
         # this is python's async generator
         yield next_all()
 
-        if context2.message.text == 'Uzbek':
-            SendMessage(context2.message.chat.chat_id, "🔹 Ok! See you later!").send()
+        if context2.message.text == 'Tajik':
+            SendMessage(context2.message.chat.chat_id, "Tajik lang").send()
             return
 
         # print reminder every five updates
-        if context2.message.text == 'Русский':
+        if context2.message.text == 'Russian':
             await SendMessage(context2.message.chat.chat_id,
-                              "🔹 I am in <code>echo</code> mode. Hit /cancel to exit.").send()
+                              "Russian").send()
 
 
 @router.handler
