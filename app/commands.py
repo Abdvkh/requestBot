@@ -8,6 +8,20 @@ from rocketgram import context2, ReplyKeyboard, make_waiter
 def next_all():
     return True
 
+
+@router.handler
+@commonfilters.chat_type(ChatType.private)
+@commonfilters.command('Tajik' || "Russian")
+def cancel_command():
+    """Removes current reply keyboard"""
+    
+    yield commonwaiters.drop_waiter()
+
+    await SendMessage(context2.message.user.user_id,
+                "🔹 What next?",
+                reply_markup=ReplyKeyboardRemove()).webhook()
+    
+
 @router.handler
 @commonfilters.chat_type(ChatType.private)
 @commonfilters.command('/start')
@@ -17,7 +31,7 @@ async def start_command():
     kb.text("Russian").row()
     kb.text("Tajik").row()
     
-    SendMessage(context2.message.user.user_id,
+    await SendMessage(context2.message.user.user_id,
                       'Добро пожаловать в наш бот, пожалуйста выберите язык использования',
                       reply_markup=kb.render()).send()
     while True:
@@ -25,16 +39,6 @@ async def start_command():
         # here waiting next request
         # this is python's async generator
         yield next_all()
-
-        if context2.message.text == 'Tajik':
-            SendMessage(context2.message.chat.chat_id, "Tajik lang").webhook()
-            return
-
-        # print reminder every five updates
-        if context2.message.text == 'Russian':
-            SendMessage(context2.message.chat.chat_id,
-                              "Russian").webhook()
-            return
 
 
 @router.handler
