@@ -11,7 +11,7 @@ def next_all():
 
 @router.handler
 @commonfilters.chat_type(ChatType.private)
-@commonfilters.command('Tajik')
+@commonfilters.command('Tajik' || 'Russian')
 def cancel_command():
     """Removes current reply keyboard"""
     
