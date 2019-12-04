@@ -27,13 +27,14 @@ async def start_command():
         yield next_all()
 
         if context2.message.text == 'Tajik':
-            await SendMessage(context2.message.chat.chat_id, "Tajik lang").send()
+            SendMessage(context2.message.chat.chat_id, "Tajik lang").webhook()
             return
 
         # print reminder every five updates
         if context2.message.text == 'Russian':
-            await SendMessage(context2.message.chat.chat_id,
-                              "Russian").send()
+            SendMessage(context2.message.chat.chat_id,
+                              "Russian").webhook()
+            return
 
 
 @router.handler
