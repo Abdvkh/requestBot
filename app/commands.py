@@ -27,7 +27,7 @@ async def start_command():
         yield next_all()
 
         if context2.message.text == 'Tajik':
-            SendMessage(context2.message.chat.chat_id, "Tajik lang").send()
+            await SendMessage(context2.message.chat.chat_id, "Tajik lang").send()
             return
 
         # print reminder every five updates
