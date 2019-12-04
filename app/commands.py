@@ -19,7 +19,7 @@ async def start_command():
     
     SendMessage(context2.message.user.user_id,
                       'Добро пожаловать в наш бот, пожалуйста выберите язык использования',
-                      reply_markup=kb.render()).send()
+                      reply_markup=kb.render()).webhook()
     while True:
 
         # here waiting next request
