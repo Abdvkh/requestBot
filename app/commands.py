@@ -19,7 +19,7 @@ def cancel_command():
 
     await SendMessage(context2.message.user.user_id,
                 "🔹 What next?",
-                reply_markup=ReplyKeyboardRemove()).webhook()
+                reply_markup=ReplyKeyboardRemove()).send()
     
 
 @router.handler
