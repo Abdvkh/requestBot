@@ -1,7 +1,7 @@
 from mybot import router
 from rocketgram import commonfilters, ChatType, SendMessage
 from rocketgram import context2, ReplyKeyboard, make_waiter
-
+from .echo import next_all
 
 @router.handler
 @commonfilters.chat_type(ChatType.private)
@@ -11,9 +11,32 @@ async def start_command():
     kb = ReplyKeyboard()
     kb.text("Русский").row()
     kb.text("Uzbek").row()
-    await SendMessage(context2.message.user.user_id,
-                      'Добро пожаловать в наш бот, пожалуйста выберите язык использования',
-                      reply_markup=kb.render()).send()
+    SendMessage(context2.message.user.user_id,
+                'Добро пожаловать в наш бот, пожалуйста выберите язык использования',
+                reply_markup=kb.render()
+                ).webhook()
+    while True:
+        yield next_all()
+
+        if context2.message.text == 'Русский':
+            kb = ReplyKeyboard()
+            kb.text("Главное меню").row()
+
+            SendMessage(context2.message.user.user_id,
+                        'Вы выбрали Русский язык.\nДобро пожаловать в бот!',
+                        reply_markup=kb.render()
+                        ).webhook()
+            return
+        elif context2.message.text == "O'zbek":
+            kb = ReplyKeyboard()
+            kb.text("Asosiy menu").row()
+
+            SendMessage(context2.message.user.user_id,
+                        'O\'zbek tilini tanladingiz.\nBotga hush kelibsiz!',
+                        reply_markup=kb.render()
+                        ).webhook()
+            return
+        SendMessage(context2.message.user.user_id, 'Wrong input, no such one available.').webhook()
 
 
 @router.handler
@@ -49,4 +72,3 @@ def help_command():
                 "/inline - Shows how to use inline mode.\n"
                 "\n"
                 "/enigma - Enigma cypher machine").webhook()
-   
